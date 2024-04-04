@@ -17,15 +17,17 @@ st.plotly_chart(scatter2, use_container_width=True)
 
 st.header('Compare odometer (miles) distributions between car conditions')
 
-histogram1 = px.histogram(data, x='odometer', color='condition', title='Histogram of Odometer Miles with Condition as Color',
-                   labels={'odometer': 'Odometer (miles)', 'condition': 'Condition'})
+condition_types = data['condition'].unique().tolist()
 
-show_condition = st.checkbox("Show Car Condition Type")
+condition_checkboxes = {condition: st.checkbox(f"Show {condition} Condition") for condition in condition_types}
 
-#Only display the plot if the checkbox is checked
-if show_condition:
-    st.plotly_chart(histogram1, use_container_width=True)
+filtered_data = data[data['condition'].isin([condition for condition, checked in condition_checkboxes.items() if checked])]
 
+histogram = px.histogram(filtered_data, x='odometer', color='condition', title='Histogram of Odometer Miles with Condition as Color',
+                         labels={'odometer': 'Odometer (miles)', 'condition': 'Condition'})
+
+# Display the plot
+st.plotly_chart(histogram, use_container_width=True)
 
 
 
