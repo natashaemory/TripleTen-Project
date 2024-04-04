@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
-data = pd.read_csv('/Users/natashagandhi/Desktop/TripleTen-Project/vehicles_us.csv')
+data = pd.read_csv('vehicles_us.csv')
 
 st.header('Scatterplot of price vs. days listed with car type as color', divider='black')
 
